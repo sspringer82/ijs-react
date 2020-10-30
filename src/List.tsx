@@ -1,53 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import fetchData, { deleteEntry } from './fetchData';
+import React from 'react';
 import ListItem from './ListItem';
-import Log from './shared/Log';
 import { Th } from './List.styles';
 
 import './List.scss';
+import useLog from './useLog';
 
 const List: React.FC = () => {
-  const [state, setState] = useState<Log[]>([]);
-
-  async function handleDelete(id: number) {
-    // fetch(`http://localhost:3001/logs/${id}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // }).then((response) => {
-    //   if (response.status === 200) {
-    //     setState((prevState) => prevState.filter((log) => log.id !== id));
-    //   }
-    // });
-    // const response = await fetch(`http://localhost:3001/logs/${id}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // if (response.status === 200) {
-    //   setState((prevState) => prevState.filter((log) => log.id !== id));
-    // }
-
-    if (await deleteEntry(id)) {
-      setState((prevState) => prevState.filter((log) => log.id !== id));
-    }
-  }
-
-  useEffect(() => {
-    (async () => {
-      const data = await fetchData();
-      setState(data);
-      console.log('data was fetched');
-    })();
-
-    // fetchData()
-    //   .then((data) => {
-    //     setState(data);
-    //     console.log('data was fetched');
-    //   })
-  }, []);
+  const { state, handleDelete } = useLog();
 
   return (
     <>

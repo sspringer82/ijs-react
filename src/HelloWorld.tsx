@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 type Props = {
   names: string[];
 };
 
 const HelloWorld: React.FC<Props> = ({ names }) => {
-  function getName() {
+  const getName = useCallback(() => {
     return 'World!';
-  }
+  }, []);
 
   return (
     <div>

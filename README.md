@@ -7,6 +7,7 @@
 - Create React App: https://create-react-app.dev/
 - Node: https://nodejs.org/
 - Thinking in React: https://reactjs.org/docs/thinking-in-react.html
+- Classnames: https://www.npmjs.com/package/classnames
 
 ## Start
 
@@ -37,6 +38,13 @@ npm start```
 2. create a backend script within the package.json file
 3. define a data.json-file at the root level of our application
 4. run `npm run backend`
+
+# Ways of styling your components:
+
+- css import: import of "traditional" CSS with className + inline styling with style prop
+- css.modules: File called App.module.css - then import style and use the assigned classnames
+- scss: `npm install node-sass` + import App.scss and use SCSS syntax
+- external styling lib such as styled-components: `npm install styled-components @types/styled-components`
 
 ## Plan for the afternoon:
 

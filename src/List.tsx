@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import fetchData, { deleteEntry } from './fetchData';
 import ListItem from './ListItem';
 import Log from './shared/Log';
+import { Th } from './List.styles';
+
+import './List.scss';
 
 const List: React.FC = () => {
   const [state, setState] = useState<Log[]>([]);
@@ -47,23 +50,26 @@ const List: React.FC = () => {
   }, []);
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>from</th>
-          <th>until</th>
-          <th>title</th>
-          <th>duration</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {state.map((log) => (
-          <ListItem log={log} key={log.id} onDelete={handleDelete} />
-        ))}
-      </tbody>
-    </table>
+    <>
+      <h1>Time logging table</h1>
+      <table>
+        <thead>
+          <tr>
+            <Th>id</Th>
+            <Th>from</Th>
+            <Th>until</Th>
+            <Th>title</Th>
+            <Th>duration</Th>
+            <Th></Th>
+          </tr>
+        </thead>
+        <tbody>
+          {state.map((log) => (
+            <ListItem log={log} key={log.id} onDelete={handleDelete} />
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 

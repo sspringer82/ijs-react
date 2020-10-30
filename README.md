@@ -45,4 +45,5 @@ npm start```
 - context api
 - form handling
 - central state management (redux...)
+- Testing
 - your questions

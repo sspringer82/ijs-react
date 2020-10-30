@@ -27,3 +27,13 @@ export default async function fetchData(): Promise<Log[]> {
 // fetchData().then(data => {
 //   setState(data);
 // })
+
+export async function deleteEntry(id: number): Promise<boolean> {
+  const response = await fetch(`http://localhost:3001/logs/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.status === 200;
+}

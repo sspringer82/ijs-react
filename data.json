@@ -6,20 +6,6 @@
       "until": "09:00",
       "title": "Breakfast",
       "duration": 1
-    },
-    {
-      "id": 2,
-      "from": "09:00",
-      "until": "11:00",
-      "title": "Work",
-      "duration": 2
-    },
-    {
-      "id": 3,
-      "from": "12:30",
-      "until": "13:30",
-      "title": "Lunch",
-      "duration": 1
     }
   ]
 }

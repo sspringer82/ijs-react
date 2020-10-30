@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import DarkModeContext from './DarkMode';
 import Log from './shared/Log';
 
 type Props = {
@@ -7,12 +8,16 @@ type Props = {
 };
 
 const ListItem: React.FC<Props> = ({ log, onDelete }) => {
+  const darkMode = useContext(DarkModeContext);
+
   return (
     <tr>
       <td>{log.id}</td>
       <td>{log.from}</td>
       <td>{log.until}</td>
-      <td>{log.title}</td>
+      <td style={{ backgroundColor: darkMode ? 'black' : 'white' }}>
+        {log.title}
+      </td>
       <td>{log.duration}</td>
       <td>
         <button

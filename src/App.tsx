@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import List from './List';
 
 import styles from './App.module.css';
+import DarkModeContext from './DarkMode';
 
 function App() {
-  return (
-    <div className="App">
-      {/* <HelloWorld names={names} /> */}
+  const [darkMode, setDarkMode] = useState(true);
 
-      <h1 className={styles.mainHeadline} style={{ color: 'lightgreen' }}>
-        Our fancy timelogger
-      </h1>
-      <List />
-    </div>
+  return (
+    <DarkModeContext.Provider value={darkMode}>
+      <button onClick={() => setDarkMode(!darkMode)}>toggle dark mode</button>
+      <div className="App">
+        {/* <HelloWorld names={names} /> */}
+
+        <h1 className={styles.mainHeadline} style={{ color: 'lightgreen' }}>
+          Our fancy timelogger
+        </h1>
+        <List />
+      </div>
+    </DarkModeContext.Provider>
   );
 }
 

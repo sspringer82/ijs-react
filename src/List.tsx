@@ -4,6 +4,7 @@ import { Th } from './List.styles';
 
 import './List.scss';
 import useLog from './useLog';
+import Form from './Form';
 
 const List: React.FC = () => {
   const { state, handleDelete } = useLog();
@@ -11,6 +12,13 @@ const List: React.FC = () => {
   return (
     <>
       <h1>Time logging table</h1>
+      <hr />
+      <Form
+        onSave={(data: { title: string; from: string; until: string }) => {
+          // insert logic to include it to the state
+        }}
+      />
+      <hr />
       <table>
         <thead>
           <tr>

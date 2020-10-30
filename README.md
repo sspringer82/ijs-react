@@ -23,3 +23,9 @@ create-react-app Projectname --use-npm --template typescript
 3. Use npx
 
 `npx create-react-app Projectname --use-npm --template typescript`
+
+### Get it up and running
+
+````npm install
+npm start```
+````

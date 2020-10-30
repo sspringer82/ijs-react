@@ -6,6 +6,7 @@
 - Comparison: https://www.npmtrends.com/@angular/core-vs-angular-vs-react-vs-vue
 - Create React App: https://create-react-app.dev/
 - Node: https://nodejs.org/
+- Thinking in React: https://reactjs.org/docs/thinking-in-react.html
 
 ## Start
 

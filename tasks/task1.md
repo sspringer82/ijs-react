@@ -6,7 +6,7 @@ The root component (App) provides a list of log entries and hands them over to t
 The structure of a Log entry is the following:
 
 ```
-type Log {
+type Log = {
   id: number;
   from: string;
   until: string;
@@ -14,3 +14,6 @@ type Log {
   duration: number;
 }
 ```
+
+Extension:
+Create a sub component ListItem that is responsible to show each Log entry.

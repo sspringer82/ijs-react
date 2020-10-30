@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import fetchData from './fetchData';
 import ListItem from './ListItem';
 import Log from './shared/Log';
 
-type Props = {
-  logs: Log[];
-};
+const List: React.FC = () => {
+  const [state, setState] = useState<Log[]>([]);
 
-const List: React.FC<Props> = ({ logs }) => {
+  useEffect(() => {
+    (async () => {
+      const data = await fetchData();
+      setState(data);
+      console.log('data was fetched');
+    })();
+
+    // fetchData()
+    //   .then((data) => {
+    //     setState(data);
+    //     console.log('data was fetched');
+    //   })
+  }, []);
+
   return (
     <table>
       <thead>
@@ -19,7 +32,7 @@ const List: React.FC<Props> = ({ logs }) => {
         </tr>
       </thead>
       <tbody>
-        {logs.map((log) => (
+        {state.map((log) => (
           <ListItem log={log} key={log.id} />
         ))}
       </tbody>

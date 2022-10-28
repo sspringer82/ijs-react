@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Form from './Form';
 import ListItem from './ListItem';
-import Person, { InputPerson } from './Person';
+import { InputPerson } from './Person';
 import { usePersonContext } from './PersonProvider';
 
 const url = `${process.env.REACT_APP_BACKEND_URL}/users`;
@@ -18,7 +18,7 @@ const List: React.FC = () => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => setPersons(data));
-  }, []);
+  }, [setPersons]);
 
   function handleDelete(id: number): void {
     fetch(`${url}/${id}`, { method: 'DELETE' }).then((response) => {

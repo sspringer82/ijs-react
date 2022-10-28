@@ -25,7 +25,10 @@ const PersonProvider: FC<Props> = ({ children }) => {
 
 function usePersonContext(): PersonContextType {
   const context = useContext(PersonContext);
-  return context as PersonContextType;
+  if (context === null) {
+    throw new Error('Please wrap this function into the PersonProvider');
+  }
+  return context;
 }
 
 export { PersonProvider, usePersonContext };

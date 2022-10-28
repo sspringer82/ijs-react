@@ -18,3 +18,14 @@ https://tanstack.com/query/v4/docs/overview
   - to load data, use the `useQuery` function
   - to remove data, use the `useMutation` function
   - deal with data, isLoading and isError
+
+# Bonus
+
+Enable React Suspense
+
+# step by step
+
+- `npm install react-error-boundary`
+- Include the `ErrorBoundary` component to handle errors when fetching data
+- Wrap the `List` Component in a `Suspense` component with a fallback component
+- In the `List` component, ignore the loading and error state and provide the `suspense: true` config option for `useQuery`

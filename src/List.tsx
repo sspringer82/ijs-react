@@ -30,11 +30,9 @@ const List: React.FC = () => {
 
   const { handleSave } = usePerson();
 
-  const {
-    data: persons,
-    isLoading,
-    isError,
-  } = useQuery(['persons'], getPersons);
+  const { data: persons } = useQuery(['persons'], getPersons, {
+    suspense: true,
+  });
 
   const mutation = useMutation(removePerson, {
     onSuccess() {
@@ -61,14 +59,6 @@ const List: React.FC = () => {
 
   function handleNew(): void {
     setForm({ edit: null, showForm: true });
-  }
-
-  if (isLoading) {
-    return <div>...loading</div>;
-  }
-
-  if (isError) {
-    return <div>...whoops something went wrong</div>;
   }
 
   return (

@@ -1,5 +1,7 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { InputPerson } from './Person';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 
 const initialPerson: InputPerson = {
   firstName: '',
@@ -17,90 +19,56 @@ type Props = {
 };
 
 const Form: React.FC<Props> = ({ id, onSave, onCancel }) => {
-  const [person, setPerson] = useState<InputPerson>(initialPerson);
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<InputPerson>({
+    defaultValues: initialPerson,
+  });
 
   useEffect(() => {
     if (id) {
       fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${id}`)
         .then((response) => response.json())
-        .then((data) => setPerson(data));
+        .then((data) => reset(data));
     }
-  }, [id]);
+  }, [id, reset]);
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setPerson((prevPerson) => ({
-      ...prevPerson,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function onSubmit(person: InputPerson) {
     onSave(person);
-    setPerson(initialPerson);
+    reset();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <label>
         first name:{' '}
         <input
           type="text"
-          name="firstName"
-          id="firstName"
-          value={person.firstName}
-          onChange={handleChange}
+          {...register('firstName', {
+            required: true,
+            minLength: 2,
+            maxLength: 20,
+          })}
         />{' '}
+        <ErrorMessage errors={errors} name="firstName" />
       </label>
       <label>
-        last name:{' '}
-        <input
-          type="text"
-          name="lastName"
-          id="lastName"
-          value={person.lastName}
-          onChange={handleChange}
-        />{' '}
+        last name: <input type="text" {...register('lastName')} />{' '}
       </label>
       <label>
-        birth date:{' '}
-        <input
-          type="text"
-          name="birthdate"
-          id="birthdate"
-          value={person.birthdate}
-          onChange={handleChange}
-        />{' '}
+        birth date: <input type="text" {...register('birthdate')} />{' '}
       </label>
       <label>
-        street:{' '}
-        <input
-          type="text"
-          name="street"
-          id="street"
-          value={person.street}
-          onChange={handleChange}
-        />{' '}
+        street: <input type="text" {...register('street')} />{' '}
       </label>
       <label>
-        city:{' '}
-        <input
-          type="text"
-          name="city"
-          id="city"
-          value={person.city}
-          onChange={handleChange}
-        />{' '}
+        city: <input type="text" {...register('city')} />{' '}
       </label>
       <label>
-        zip code:{' '}
-        <input
-          type="text"
-          name="zipCode"
-          id="zipCode"
-          value={person.zipCode}
-          onChange={handleChange}
-        />{' '}
+        zip code: <input type="text" {...register('zipCode')} />{' '}
       </label>
       <button type="submit">save</button>
       <button type="reset" onClick={onCancel}>

@@ -1,10 +1,50 @@
 import React, { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Form from './Form';
 import ListItem from './ListItem';
+import Person from './Person';
 import usePerson from './usePerson';
 
+const url = `${process.env.REACT_APP_BACKEND_URL}/users`;
+
+async function getPersons(): Promise<Person[]> {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('Response not OK');
+  }
+  const data = await response.json();
+  return data;
+}
+
+async function removePerson(id: number): Promise<void> {
+  const response = await fetch(`${url}/${id}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error('Response not OK');
+  }
+}
+
 const List: React.FC = () => {
-  const { persons, handleDelete, handleSave } = usePerson();
+  const queryClient = useQueryClient();
+
+  const { handleSave } = usePerson();
+
+  const {
+    data: persons,
+    isLoading,
+    isError,
+  } = useQuery(['persons'], getPersons);
+
+  const mutation = useMutation(removePerson, {
+    onSuccess() {
+      queryClient.invalidateQueries(['persons']);
+    },
+  });
+
+  function handleDelete(id: number) {
+    mutation.mutate(id);
+  }
 
   const [form, setForm] = useState<{ edit: number | null; showForm: boolean }>({
     edit: null,
@@ -21,6 +61,14 @@ const List: React.FC = () => {
 
   function handleNew(): void {
     setForm({ edit: null, showForm: true });
+  }
+
+  if (isLoading) {
+    return <div>...loading</div>;
+  }
+
+  if (isError) {
+    return <div>...whoops something went wrong</div>;
   }
 
   return (

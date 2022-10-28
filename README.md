@@ -13,3 +13,9 @@
 - long lists
 - new (and even better) ways of doing standard tasks
 - Testing
+
+# Links
+
+- https://beta.reactjs.org/
+- https://overreacted.io/
+- https://kentcdodds.com/blog

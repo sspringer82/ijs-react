@@ -15,6 +15,15 @@ type PersonContextType = [
 
 - create the context `PersonContext` with `React.createContext`
 - create a new Component `PersonProvider` with its own state, that you are providing via `PersonContext.Provider`
+
+```ts
+type Props = {
+  children?: React.ReactNode;
+};
+
+const PersonProvider: React.FC<Props> = ({ children }) => {};
+```
+
 - create a new hook function `usePersonContext`, that allows you to access the context via `useContext`
 - Integrate the context in your `List` Component
 

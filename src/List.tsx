@@ -1,112 +1,68 @@
-import React, { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import Form from './Form';
-import ListItem from './ListItem';
+import { ReactNode, CSSProperties, ReactElement, useState } from 'react';
+import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import Person from './Person';
-import usePerson from './usePerson';
 
-const url = `${process.env.REACT_APP_BACKEND_URL}/users`;
+const persons = new Array(1_000)
+  .fill({
+    firstName: 'Heloise',
+    lastName: 'Vandervort',
+    birthdate: '1942-05-12T05:49:02.557Z',
+    street: '268 Rosie Port Suite 454',
+    city: 'Waterbury',
+    zipCode: '49858-5684',
+  })
+  .map((person, id) => ({ ...person, id }));
 
-async function getPersons(): Promise<Person[]> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error('Response not OK');
-  }
-  const data = await response.json();
-  return data;
-}
-
-async function removePerson(id: number): Promise<void> {
-  const response = await fetch(`${url}/${id}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) {
-    throw new Error('Response not OK');
-  }
-}
-
-const List: React.FC = () => {
-  const queryClient = useQueryClient();
-
-  const { handleSave } = usePerson();
-
-  const { data: persons } = useQuery(['persons'], getPersons, {
-    suspense: true,
-  });
-
-  const mutation = useMutation(removePerson, {
-    onSuccess() {
-      queryClient.invalidateQueries(['persons']);
-    },
-  });
-
-  function handleDelete(id: number) {
-    mutation.mutate(id);
-  }
-
-  const [form, setForm] = useState<{ edit: number | null; showForm: boolean }>({
-    edit: null,
-    showForm: false,
-  });
-
-  function handleEdit(id: number): void {
-    setForm({ edit: id, showForm: true });
-  }
-
-  function clearAndHideForm(): void {
-    setForm({ edit: null, showForm: false });
-  }
-
-  function handleNew(): void {
-    setForm({ edit: null, showForm: true });
-  }
-
+function Inner({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style: CSSProperties;
+}): ReactElement {
   return (
-    <>
-      {form.showForm && (
-        <Form
-          id={form.edit}
-          onSave={(formData) => {
-            handleSave(formData);
-            clearAndHideForm();
-          }}
-          onCancel={clearAndHideForm}
-        />
-      )}
-      <table>
-        <thead>
-          <tr>
-            <th>first name</th>
-            <th>last name</th>
-            <th>birth date</th>
-            <th>street</th>
-            <th>city</th>
-            <th>zip code</th>
-          </tr>
-        </thead>
-        <tbody>
-          {persons?.map((person) => (
-            <ListItem
-              key={person.id}
-              person={person}
-              onDelete={handleDelete}
-              onEdit={handleEdit}
-            />
-          ))}
-        </tbody>
-      </table>
-      <button
-        onClick={handleNew}
-        style={{
-          position: 'sticky',
-          bottom: 20,
-          left: '90%',
-        }}
-      >
-        new
-      </button>
-    </>
+    <table>
+      <thead>
+        <tr>
+          <th style={{ width: 200 }}>first name</th>
+          <th style={{ width: 200 }}>last name</th>
+          <th style={{ width: 200 }}>birth date</th>
+          <th style={{ width: 200 }}>street</th>
+          <th style={{ width: 200 }}>city</th>
+          <th style={{ width: 200 }}>zip code</th>
+        </tr>
+      </thead>
+      <tbody style={{ ...style, position: 'absolute', width: '100%' }}>
+        {children}
+      </tbody>
+    </table>
   );
-};
+}
 
-export default List;
+function Row({ index, style }: ListChildComponentProps): ReactElement {
+  return (
+    <tr style={style}>
+      <td style={{ width: 50 }}>{persons[index].firstName}</td>
+      <td style={{ width: 200 }}>{persons[index].lastaName}</td>
+      <td style={{ width: 200 }}>{persons[index].birthDate}</td>
+      <td style={{ width: 200 }}>{persons[index].street}</td>
+      <td style={{ width: 100 }}>{persons[index].city}</td>
+      <td style={{ width: 100 }}>{persons[index].zipCode}</td>
+    </tr>
+  );
+}
+
+export default function MyList() {
+  // const [persons, setPersons] = useState<Person[]>([]);
+  return (
+    <List
+      height={300}
+      itemCount={persons.length}
+      itemSize={30}
+      width={750}
+      innerElementType={Inner}
+    >
+      {Row}
+    </List>
+  );
+}

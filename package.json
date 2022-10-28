@@ -3,9 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "author": {
+    "email": "sebastian.springer@maibornwolff.de",
+    "url": "https://twitter.com/basti_springer"
+  },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@faker-js/faker": "^7.5.0",
+    "@fontsource/roboto": "^4.5.8",
     "@hookform/error-message": "^2.0.0",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.11",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

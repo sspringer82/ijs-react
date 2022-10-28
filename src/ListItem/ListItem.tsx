@@ -1,5 +1,6 @@
 import React from 'react';
 import Person from '../Person';
+import { Button } from '@mui/material';
 
 type Params = {
   person: Person;
@@ -22,9 +23,9 @@ const ListItem: React.FC<Params> = ({ person, onDelete, onEdit }) => {
         </button>
       </td>
       <td>
-        <button onClick={() => onEdit(person.id)} data-testid="edit-btn">
+        <Button onClick={() => onEdit(person.id)} data-testid="edit-btn">
           edit
-        </button>
+        </Button>
       </td>
     </tr>
   );
